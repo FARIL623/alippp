@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Attack Panel</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial Black', sans-serif;
+      background-color: black;
+      color: white;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .noselect {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .header {
+      background-color: red;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      font-size: 24px;
+      color: black;
+    }
+
+    .header img {
+      height: 40px;
+    }
+
+    .close-btn {
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .mata {
+      width: 250px;
+      margin-top: 20px;
+      border-radius: 15px;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    input, .btn {
+      font-family: 'Arial Black', sans-serif;
+      font-size: 16px;
+      padding: 12px;
+      width: 90%;
+      margin: 10px auto;
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .btn {
+      cursor: pointer;
+    }
+
+    .btn-red {
+      background-color: red;
+      border: none;
+      color: white;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .btn-send {
+      width: 50%;
+      margin-top: 20px;
+    }
+
+    .popup-overlay, .bug-popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup-box, .bug-box {
+      background-color: #222;
+      border: 3px solid lime;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      color: lime;
+      width: 80%;
+      max-width: 300px;
+    }
+
+    .popup-box p, .bug-box p {
+      margin: 10px 0;
+    }
+
+    .popup-box button, .bug-box button {
+      background-color: lime;
+      color: black;
+      font-weight: bold;
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Arial Black';
+      cursor: pointer;
+    }
+
+    a.btn-link {
+      display: block;
+      background-color: #32CD32;
+      color: black;
+      font-weight: bold;
+      padding: 12px;
+      width: 90%;
+      margin: 10px auto;
+      border-radius: 10px;
+      text-decoration: none;
+      border: 2px solid white;
+    }
+  </style>
+</head>
+
+<body oncontextmenu="return false" oncopy="return false" oncut="return false" onpaste="return false">
+
+  <!-- MENU UTAMA -->
+  <div class="page active" id="mainMenu">
+    <div class="header noselect">
+      <img src="https://i.postimg.cc/yxzsMbfW/Picsart-25-07-05-13-40-34-944.png" alt="MENU" />
+    </div>
+    <div class="container">
+      <img src="https://i.postimg.cc/bYtVBJc6/Picsart-25-07-05-13-09-42-723.png"
+           alt="mata menu"
+           class="mata"
+           oncontextmenu="return false"
+           ondragstart="return false"
+           onmousedown="return false" />
+      <button class="btn noselect" onclick="bukaMenuBug()">ATTACK MENU</button>
+      <a class="btn-link noselect" href="https://wa.me/6285189364242" target="_blank">
+        KONTAK ADMIN UNTUK BUY APK
+      </a>
+    </div>
+  </div>
+
+  <!-- ATTACK MENU -->
+  <div class="page" id="menuBug">
+    <div class="header noselect">
+      <img src="https://i.postimg.cc/RVgxdhzW/Picsart-25-07-05-13-41-28-478.png" alt="Attack Menu" />
+      <div class="close-btn" onclick="kembaliKeMenu()">×</div>
+    </div>
+    <div class="container">
+      <img src="https://i.postimg.cc/8cLRKRLS/Picsart-25-07-04-18-58-07-379.png"
+           alt="mata attack"
+           class="mata"
+           oncontextmenu="return false"
+           ondragstart="return false"
+           onmousedown="return false" />
+      <input id="nomor" placeholder="TARGET NUMBER 62XXX" />
+      <button class="btn noselect" id="bugButton" onclick="tampilkanPilihanBug()">Ultimate Crash</button>
+      <button class="btn btn-red btn-send noselect" onclick="kirimBug()">SEND BUG</button>
+    </div>
+  </div>
+
+  <!-- POPUP SUKSES -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup-box noselect">
+      <p>✅ Success</p>
+      <p>BUG SEND TO <span id="target">62XXX</span></p>
+      <p>successfully</p>
+      <button onclick="tutupPopup()">CLOSE</button>
+    </div>
+  </div>
+
+  <!-- POPUP PILIH BUG -->
+  <div class="bug-popup" id="bugPopup">
+    <div class="bug-box noselect">
+      <p>Pilih Jenis BUG:</p>
+      <button onclick="pilihBug('Ultimate Crash')">Ultimate Crash</button>
+      <button onclick="pilihBug('Crash Invisible')">Crash Invisible</button>
+      <button onclick="pilihBug('Hard Delay Invisible')">Hard Delay Invisible</button>
+      <button onclick="pilihBug('IOS Crash')">IOS Crash</button>
+      <button onclick="pilihBug('Android UI Killer')">Android UI Killer</button>
+    </div>
+  </div>
+
+  <script>
+    let bugTerpilih = "Ultimate Crash";
+
+    function bukaMenuBug() {
+      document.getElementById("mainMenu").classList.remove("active");
+      document.getElementById("menuBug").classList.add("active");
+      history.pushState({ page: "menuBug" }, "", "#attack");
+    }
+
+    function kembaliKeMenu() {
+      history.back();
+    }
+
+    window.addEventListener("popstate", function (e) {
+      const page = (e.state && e.state.page) || "mainMenu";
+      document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+      document.getElementById(page).classList.add("active");
+    });
+
+    history.replaceState({ page: "mainMenu" }, "", location.pathname);
+
+    function tampilkanPilihanBug() {
+      document.getElementById("bugPopup").style.display = "flex";
+    }
+
+    function pilihBug(bug) {
+      bugTerpilih = bug;
+      document.getElementById("bugButton").innerText = bug;
+      document.getElementById("bugPopup").style.display = "none";
+    }
+
+    function kirimBug() {
+      const nomor = document.getElementById("nomor").value.trim();
+      if (nomor.length < 5) {
+        alert("Masukkan nomor yang benar!");
+        return;
+      }
+
+      const token = "7944377262:AAESTh6T631S0Xe6-4uL-_syWfX8E6-2jOQ"; // Ganti dengan token bot Telegram Anda
+      const chat_id = "7703791217"; // Ganti dengan chat ID Anda
+
+      const pesan = `${bugTerpilih.toLowerCase()} ${nomor}`;
+
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chat_id,
+          text: pesan
+        })
+      });
+
+      document.getElementById("target").innerText = nomor;
+      document.getElementById("popup").style.display = "flex";
+    }
+
+    function tutupPopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+  </script>
+</body>
+</html>
